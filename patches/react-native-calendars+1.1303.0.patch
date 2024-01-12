@@ -1,0 +1,24 @@
+diff --git a/node_modules/react-native-calendars/src/calendar-list/index.js b/node_modules/react-native-calendars/src/calendar-list/index.js
+index e0449bc..0d4689d 100644
+--- a/node_modules/react-native-calendars/src/calendar-list/index.js
++++ b/node_modules/react-native-calendars/src/calendar-list/index.js
+@@ -43,7 +43,7 @@ const CalendarList = (props, ref) => {
+     /** ScrollView props */
+     horizontal = false, pagingEnabled, scrollEnabled = true, nestedScrollEnabled = true, scrollsToTop = false, keyExtractor = (_, index) => String(index), keyboardShouldPersistTaps, onScrollBeginDrag, onScrollEndDrag, onMomentumScrollBegin, onMomentumScrollEnd, 
+     /** FlatList props */
+-    onEndReachedThreshold, onEndReached } = props;
++    onEndReachedThreshold, onEndReached, customComponent } = props;
+     const calendarProps = extractCalendarProps(props);
+     const headerProps = extractHeaderProps(props);
+     const calendarSize = horizontal ? calendarWidth : calendarHeight;
+@@ -193,8 +193,9 @@ const CalendarList = (props, ref) => {
+             onViewableItemsChanged
+         },
+     ]);
++    const ListComponent = customComponent ?? FlatList;
+     return (<View style={style.current.flatListContainer} testID={testID}>
+-      <FlatList 
++      <ListComponent
+     // @ts-expect-error
+     ref={list} windowSize={shouldUseAndroidRTLFix ? pastScrollRange + futureScrollRange + 1 : undefined} style={listStyle} showsVerticalScrollIndicator={showScrollIndicator} showsHorizontalScrollIndicator={showScrollIndicator} data={items} renderItem={renderItem} getItemLayout={getItemLayout} initialNumToRender={range.current} initialScrollIndex={initialDateIndex} viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current} testID={`${testID}.list`} onLayout={onLayout} removeClippedSubviews={removeClippedSubviews} pagingEnabled={pagingEnabled} scrollEnabled={scrollEnabled} scrollsToTop={scrollsToTop} horizontal={horizontal} keyboardShouldPersistTaps={keyboardShouldPersistTaps} keyExtractor={keyExtractor} onEndReachedThreshold={onEndReachedThreshold} onEndReached={onEndReached} nestedScrollEnabled={nestedScrollEnabled} onMomentumScrollBegin={onMomentumScrollBegin} onMomentumScrollEnd={onMomentumScrollEnd} onScrollBeginDrag={onScrollBeginDrag} onScrollEndDrag={onScrollEndDrag}/>
+       {renderStaticHeader()}
